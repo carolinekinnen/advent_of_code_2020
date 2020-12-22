@@ -53,6 +53,11 @@ with open("day_3_data_txt.txt","r") as f:
 max_len = len(trail_list[0])-1
 
 def slope(col_incr, row_incr):
+    '''
+    Input, integers: column (x axis) increment, row (y axis) increment
+
+    Return, integer: count of number of trees
+    '''
     col = 0;
     row = 0;
     trees = 0;
