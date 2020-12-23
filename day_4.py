@@ -15,7 +15,8 @@ sample_batch = [{"ecl":"gry",
 "ecl":"brn", "pid":"760753108", "byr":1931,
 "hgt":"179cm"},
 {"hcl":"#cfa07d", "eyr":2025, "pid":"166559648",
-"iyr":2011, "ecl":"brn", "hgt":"59in"}
+"iyr":2011, "ecl":"brn", "hgt":"59in"},
+{"hcl":"#cfa07d", "eyr": 2024}
 ]
 
 batch_raw = []
@@ -74,23 +75,23 @@ def value_check(lst):
     count_pass = 0
 
     for dictionary in lst:
-            # check that passport has required fields first
         count_fields = 0
         for field in req_fields:
             if field in dictionary.keys():
+                count_fields += 1
 
+        valid = True
 
-        for key, value in dictionary.items():
-            valid = True
-            while valid == True:
+        if count_fields == len(req_fields):
+            for key, value in dictionary.items():
                 if key == "byr":
-                    if (value < 1920 and value > 2002) or len(str(value)) != 4:
+                    if int(value) < 1920 or int(value) > 2002 or len(str(value)) != 4:
                         valid = False
                 if key == "iyr":
-                    if (value < 2010 and value > 2020) or len(str(value)) != 4:
+                    if int(value) < 2010 or int(value) > 2020 or len(str(value)) != 4:
                         valid = False
                 if key == "eyr":
-                    if (value < 2020 and value > 2030) or len(str(value)) != 4:
+                    if int(value) < 2020 or int(value) > 2030 or len(str(value)) != 4:
                         valid = False
                 if key == "hgt":
                     if value[-2:] == "cm":
@@ -102,7 +103,7 @@ def value_check(lst):
                     else:
                         valid = False
                 if key == "hcl":
-                    if value[0] != "#" or len(value) != 6 or not set(value).isdisjoint(set("ghijklmnopqrstuvwxyz")):
+                    if value[0] != "#" or len(value) != 7 or not set(value).isdisjoint(set("ghijklmnopqrstuvwxyz")):
                         valid = False
                 if key == "ecl":
                     if value not in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]:
@@ -111,13 +112,10 @@ def value_check(lst):
                     if len(value) != 9:
                         valid = False
                 
-                break 
-
             if valid == True:
                 count_pass += 1
 
     return count_pass
 
-                
-
+            
 
